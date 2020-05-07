@@ -6,10 +6,6 @@ public class UserInfo {
 
     public void UserInfo(){}
 
-    public UserInfo(String username) {
-        this.username = username;
-    }
-
     public String getUsername() {
         return username;
     }

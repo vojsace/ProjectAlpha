@@ -90,7 +90,8 @@ private String username, email, pass;
         startActivity(intent);
     }
     private void writeNewUser(String userId, String username){
-        UserInfo userInfo = new UserInfo(username);
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername(username);
 
         reference.child("Users").child(userId).setValue(userInfo);
     }
