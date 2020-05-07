@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Project  Alpha</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="have_an_account">Have an account?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="please_wait">Please Wait</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="go_to">Go to</string>
+    <string name="want_a_new_account">Want a new account?</string>
+    <string name="update_info">update info</string>
+    <string name="save">Save</string>
+    <string name="username">Username</string>
+</resources>
