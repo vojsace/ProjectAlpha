@@ -37,5 +37,6 @@
         android:layout_width="match_parent"
         android:layout_height="678dp"
         android:layout_above="@+id/room_name_edittext"
-        android:layout_marginBottom="5dp" />
+        android:layout_marginBottom="5dp"
+        />
 </RelativeLayout>

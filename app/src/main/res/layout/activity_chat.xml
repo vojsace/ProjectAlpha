@@ -21,33 +21,20 @@
         android:id="@+id/chat_btn"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/chat_listView"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="-1dp"
         android:layout_marginEnd="6dp"
         android:layout_marginBottom="7dp"
+        android:layout_toEndOf="@+id/chat_editText"
         android:text="@string/add" />
 
-    <ScrollView
-        android:id="@+id/chat_listView"
-        android:layout_width="413dp"
-        android:layout_height="669dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/recyclerViewID"
+        android:layout_height="663dp"
         android:layout_above="@+id/chat_editText"
-        android:layout_marginBottom="14dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginBottom="20dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textMsgView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </ScrollView>
 </RelativeLayout>
