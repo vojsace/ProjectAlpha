@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,7 +31,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
-    private Button btnSave;
+    private ImageButton btnSave;
     private EditText msg_input;
     private RecyclerView recyclerView;
 
@@ -50,7 +51,7 @@ public class ChatActivity extends AppCompatActivity {
         room_name = getIntent().getExtras().get("room_name").toString();
         setTitle("Room - " + room_name);
 
-        btnSave = (Button)findViewById(R.id.chat_btn);
+        btnSave = (ImageButton)findViewById(R.id.imageButton);
         msg_input = (EditText)findViewById(R.id.chat_editText);
         ref = FirebaseDatabase.getInstance().getReference("rooms/" + room_name);
         recyclerView = findViewById(R.id.recyclerViewID);
@@ -85,6 +86,7 @@ public class ChatActivity extends AppCompatActivity {
             @NonNull
             @Override
             public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
               View v =  LayoutInflater.from(parent.getContext()).inflate(R.layout.single_message_layout, parent, false);
 
                 return new myViewHolder(v);
