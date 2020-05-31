@@ -14,23 +14,38 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="3dp"
+        android:background="@drawable/user_msg_rounded"
         android:ems="10"
-        android:inputType="textShortMessage|textLongMessage" />
+        android:hint="@string/aa"
+        android:imeOptions="actionSend"
+        android:inputType="textLongMessage"
+        android:padding="8dp"
+        android:singleLine="false" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
         android:id="@+id/recyclerViewID"
+        android:layout_width="match_parent"
         android:layout_height="663dp"
         android:layout_above="@+id/chat_editText"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="25dp"
+        android:clickable="false"
+        android:isScrollContainer="false"
+        android:orientation="vertical"
+        android:persistentDrawingCache="scrolling"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:scrollbars="vertical"
+        app:reverseLayout="false"
+        app:stackFromEnd="false" />
 
     <ImageButton
         android:id="@+id/imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/chat_editText"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="25dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="6dp"
         android:layout_toEndOf="@+id/chat_editText"

@@ -6,17 +6,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.firebase.ui.common.ChangeEventType;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.ChildEventListener;
@@ -58,20 +65,23 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+
+        msg_input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    sendMsg();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String, Object> map = new HashMap<String, Object>();
-                temp_key = ref.push().getKey();
-                ref.updateChildren(map);
-
-                DatabaseReference message_root = ref.child(temp_key);
-                Map<String, Object> map2 = new HashMap<String, Object>();
-                map2.put("name", current_user);
-                map2.put("msg", msg_input.getText().toString());
-
-                message_root.updateChildren(map2);
-                msg_input.setText("");
+                sendMsg();
             }
         });
 
@@ -79,21 +89,46 @@ public class ChatActivity extends AppCompatActivity {
         adapter = new FirebaseRecyclerAdapter<model, myViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull myViewHolder myViewHolder, int i, @NonNull model model) {
-                myViewHolder.textViewUser.setText(model.getName());
-                myViewHolder.textViewMsg.setText(model.getMsg());
+                if (current_user.equals(model.getName())) {
+                    myViewHolder.usrLayout.setGravity(Gravity.END);
+                    myViewHolder.textViewMsg.setBackgroundResource(R.drawable.rounded_btn);
+                }else {
+                    myViewHolder.usrLayout.setGravity(Gravity.START);
+                    myViewHolder.textViewMsg.setBackgroundResource(R.drawable.user_msg_rounded);
+                }
+                    myViewHolder.textViewUser.setText(model.getName());
+                    myViewHolder.textViewMsg.setText(model.getMsg());
+
             }
 
             @NonNull
             @Override
             public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
               View v =  LayoutInflater.from(parent.getContext()).inflate(R.layout.single_message_layout, parent, false);
 
                 return new myViewHolder(v);
             }
+
         };
 
         adapter.startListening();
         recyclerView.setAdapter(adapter);
+    }
+
+    public void sendMsg (){
+        if (!msg_input.getText().toString().equals("")){
+            Map<String, Object> map = new HashMap<String, Object>();
+            temp_key = ref.push().getKey();
+            ref.updateChildren(map);
+
+            DatabaseReference message_root = ref.child(temp_key);
+            Map<String, Object> map2 = new HashMap<String, Object>();
+            map2.put("name", current_user);
+            map2.put("msg", msg_input.getText().toString());
+
+            message_root.updateChildren(map2);
+            msg_input.setText("");
+            recyclerView.scrollToPosition(adapter.getItemCount()); //scroll to the last message
+        }
     }
 }

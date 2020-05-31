@@ -16,4 +16,5 @@
     <string name="username">Username</string>
     <string name="rooms">Rooms</string>
     <string name="add">Add</string>
+    <string name="aa">Type a message...</string>
 </resources>
