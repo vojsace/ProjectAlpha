@@ -5,6 +5,7 @@ import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -19,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Random;
 
 public class SignUpActivity extends AppCompatActivity {
 private TextInputLayout signUpUsername, signUpMail, signUpPass;
@@ -90,8 +93,13 @@ private String username, email, pass;
         startActivity(intent);
     }
     private void writeNewUser(String userId, String username){
+        Random rand = new Random();
+        int r = rand.nextInt(255);
+        int g = rand.nextInt(255);
+        int b = rand.nextInt(255);
         UserInfo userInfo = new UserInfo();
         userInfo.setUsername(username);
+        userInfo.setUser_color(Color.rgb(r, g, b));
 
         reference.child("Users").child(userId).setValue(userInfo);
     }

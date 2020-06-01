@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -43,7 +44,7 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     DatabaseReference ref;
-    private String room_name, current_user;
+    private String room_name, current_user, color;
     private String temp_key;
 
     private FirebaseRecyclerOptions<model> options;
@@ -56,6 +57,7 @@ public class ChatActivity extends AppCompatActivity {
 
         current_user = getIntent().getExtras().get("user_name").toString();
         room_name = getIntent().getExtras().get("room_name").toString();
+        color = getIntent().getExtras().get("user_color").toString();
         setTitle("Room - " + room_name);
 
         btnSave = (ImageButton)findViewById(R.id.imageButton);
@@ -90,11 +92,16 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(@NonNull myViewHolder myViewHolder, int i, @NonNull model model) {
                 if (current_user.equals(model.getName())) {
+                    Drawable img = getResources().getDrawable(R.drawable.rounded_btn);
                     myViewHolder.usrLayout.setGravity(Gravity.END);
-                    myViewHolder.textViewMsg.setBackgroundResource(R.drawable.rounded_btn);
+                    img.setTint(Integer.parseInt(color));
+                    myViewHolder.textViewMsg.setBackground(img);
+
                 }else {
+                    Drawable img = getResources().getDrawable(R.drawable.user_msg_rounded);
                     myViewHolder.usrLayout.setGravity(Gravity.START);
-                    myViewHolder.textViewMsg.setBackgroundResource(R.drawable.user_msg_rounded);
+                    img.setTint(Integer.parseInt(model.getUser_color()));
+                    myViewHolder.textViewMsg.setBackground(img);
                 }
                     myViewHolder.textViewUser.setText(model.getName());
                     myViewHolder.textViewMsg.setText(model.getMsg());
@@ -125,7 +132,7 @@ public class ChatActivity extends AppCompatActivity {
             Map<String, Object> map2 = new HashMap<String, Object>();
             map2.put("name", current_user);
             map2.put("msg", msg_input.getText().toString());
-
+            map2.put("user_color", color);
             message_root.updateChildren(map2);
             msg_input.setText("");
             recyclerView.scrollToPosition(adapter.getItemCount()); //scroll to the last message

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,7 +38,7 @@ public class GroupActivity extends AppCompatActivity {
     private ArrayAdapter<String> array_adapter;
     private ArrayList<String> list_of_rooms = new ArrayList<>();
 
-    private String name;
+    private String name, color;
     private DatabaseReference root = FirebaseDatabase.getInstance().getReference("rooms");
 
     @Override
@@ -91,6 +92,7 @@ public class GroupActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
                 intent.putExtra("room_name", ((TextView)view).getText().toString());
                 intent.putExtra("user_name", name);
+                intent.putExtra("user_color", color);
                 startActivity(intent);
             }
         });
@@ -98,7 +100,7 @@ public class GroupActivity extends AppCompatActivity {
 
     private void request_user_name(){
         name = getIntent().getExtras().getString("user_name");
-
+        color = getIntent().getExtras().getString("user_color");
     }
 
 }
