@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bgColor"
     tools:context=".ChatActivity">
 
     <EditText
@@ -15,12 +16,14 @@
         android:layout_marginStart="20dp"
         android:layout_marginBottom="3dp"
         android:background="@drawable/user_msg_rounded"
+        android:backgroundTint="#686666"
         android:ems="10"
         android:hint="@string/aa"
         android:imeOptions="actionSend"
         android:inputType="textLongMessage"
         android:padding="8dp"
-        android:singleLine="false" />
+        android:singleLine="false"
+        android:textColor="#FFFFFF" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewID"

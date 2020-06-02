@@ -24,7 +24,7 @@
         android:background="@drawable/user_msg_rounded"
         android:padding="10dp"
         android:text="@string/app_name"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
 </LinearLayout>
