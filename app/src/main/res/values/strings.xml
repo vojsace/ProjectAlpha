@@ -17,4 +17,5 @@
     <string name="rooms">Rooms</string>
     <string name="add">Add</string>
     <string name="aa">Type a message...</string>
+    <string name="lobby">Lobby</string>
 </resources>

@@ -28,8 +28,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewID"
         android:layout_width="match_parent"
-        android:layout_height="663dp"
+        android:layout_height="562dp"
         android:layout_above="@+id/chat_editText"
+        android:layout_below="@+id/scrollView"
+        android:layout_marginTop="21dp"
         android:layout_marginBottom="25dp"
         android:clickable="false"
         android:isScrollContainer="false"
@@ -54,5 +56,28 @@
         android:layout_toEndOf="@+id/chat_editText"
         android:background="@drawable/rounded_btn"
         app:srcCompat="@drawable/arrow" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/colorPrimary">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/scrollText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/textColor"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

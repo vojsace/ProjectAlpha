@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
                                 Log.d("mesage", name);
                                 clr = String.valueOf(color);
                                 Log.d("user_color", clr);
-                                greeting.setText("Hello, " + name);
+                                greeting.setText("Welcome, " + name);
 
                                 goToGroup.setOnClickListener(new View.OnClickListener() {
                                     @Override

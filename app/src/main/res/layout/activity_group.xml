@@ -16,7 +16,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginBottom="3dp"
         android:ems="10"
-        android:hint="Enter Room Name"
+        android:hint="Enter your question"
         android:inputType="textShortMessage|textLongMessage" />
 
     <Button
@@ -38,7 +38,22 @@
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="678dp"
+        android:layout_height="600dp"
         android:layout_above="@+id/room_name_edittext"
         android:layout_marginBottom="5dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/listView"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="11dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="Questions Lobby"
+        android:textColor="@color/blueColor"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 </RelativeLayout>

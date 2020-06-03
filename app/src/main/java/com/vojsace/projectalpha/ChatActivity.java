@@ -42,6 +42,7 @@ public class ChatActivity extends AppCompatActivity {
     private ImageButton btnSave;
     private EditText msg_input;
     private RecyclerView recyclerView;
+    private TextView scrollText;
 
     DatabaseReference ref;
     private String room_name, current_user, color;
@@ -58,7 +59,8 @@ public class ChatActivity extends AppCompatActivity {
         current_user = getIntent().getExtras().get("user_name").toString();
         room_name = getIntent().getExtras().get("room_name").toString();
         color = getIntent().getExtras().get("user_color").toString();
-        setTitle("Room - " + room_name);
+        scrollText = (TextView) findViewById(R.id.scrollText);
+        scrollText.setText(room_name); //adds the question
 
         btnSave = (ImageButton)findViewById(R.id.imageButton);
         msg_input = (EditText)findViewById(R.id.chat_editText);
@@ -91,14 +93,13 @@ public class ChatActivity extends AppCompatActivity {
         adapter = new FirebaseRecyclerAdapter<model, myViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull myViewHolder myViewHolder, int i, @NonNull model model) {
+                Drawable img = getResources().getDrawable(R.drawable.user_msg_rounded);
                 if (current_user.equals(model.getName())) {
-                    Drawable img = getResources().getDrawable(R.drawable.rounded_btn);
                     myViewHolder.usrLayout.setGravity(Gravity.END);
                     img.setTint(Integer.parseInt(color));
                     myViewHolder.textViewMsg.setBackground(img);
 
                 }else {
-                    Drawable img = getResources().getDrawable(R.drawable.user_msg_rounded);
                     myViewHolder.usrLayout.setGravity(Gravity.START);
                     img.setTint(Integer.parseInt(model.getUser_color()));
                     myViewHolder.textViewMsg.setBackground(img);
