@@ -32,6 +32,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,17 +40,21 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
-    private ImageButton btnSave;
+    private ImageButton btnSave, likeBtn;
     private EditText msg_input;
     private RecyclerView recyclerView;
-    private TextView scrollText;
+    private TextView scrollText, likeText;
 
     DatabaseReference ref;
     private String room_name, current_user, color;
     private String temp_key;
+    private boolean likeClicked = false;
+    private int likes_count = 0;
 
     private FirebaseRecyclerOptions<model> options;
     private FirebaseRecyclerAdapter<model, myViewHolder> adapter;
+
+    private DatabaseReference mDatabaseLike;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +70,12 @@ public class ChatActivity extends AppCompatActivity {
         btnSave = (ImageButton)findViewById(R.id.imageButton);
         msg_input = (EditText)findViewById(R.id.chat_editText);
         ref = FirebaseDatabase.getInstance().getReference("rooms/" + room_name);
+        mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
+        mDatabaseLike.keepSynced(true);
+        ref.keepSynced(true);
         recyclerView = findViewById(R.id.recyclerViewID);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
 
 
         msg_input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -92,7 +99,8 @@ public class ChatActivity extends AppCompatActivity {
         options = new FirebaseRecyclerOptions.Builder<model>().setQuery(ref, model.class).build();
         adapter = new FirebaseRecyclerAdapter<model, myViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull myViewHolder myViewHolder, int i, @NonNull model model) {
+            protected void onBindViewHolder(@NonNull final myViewHolder myViewHolder, int i, @NonNull final model model) {
+                String msg_id = model.getMsg_id();
                 Drawable img = getResources().getDrawable(R.drawable.user_msg_rounded);
                 if (current_user.equals(model.getName())) {
                     myViewHolder.usrLayout.setGravity(Gravity.END);
@@ -106,6 +114,58 @@ public class ChatActivity extends AppCompatActivity {
                 }
                     myViewHolder.textViewUser.setText(model.getName());
                     myViewHolder.textViewMsg.setText(model.getMsg());
+
+                    mDatabaseLike.child(room_name).child(msg_id).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            likes_count = (int) dataSnapshot.getChildrenCount();
+                            myViewHolder.likeText.setText(String.valueOf(likes_count));
+
+                            if (dataSnapshot.hasChild(current_user)){
+                                myViewHolder.likeBtn.setBackgroundResource(R.drawable.like);
+                            }else
+                                myViewHolder.likeBtn.setBackgroundResource(R.drawable.dislike);
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    myViewHolder.likeBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            likeClicked = true;
+
+                                mDatabaseLike.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        String msg_id = model.getMsg_id();
+                                     if (likeClicked) {
+                                         if (dataSnapshot.child(room_name).child(msg_id).hasChild(current_user)){
+                                             Log.d("unlike_msg", "success");
+                                             mDatabaseLike.child(room_name).child(msg_id).child(current_user).removeValue();
+                                            // myViewHolder.likeBtn.setBackgroundResource(R.drawable.dislike);
+                                         }else{
+                                             mDatabaseLike.child(room_name).child(msg_id).child(current_user).setValue("true");
+                                             Log.d("unlike_msg", "success - liked");
+                                            // myViewHolder.likeBtn.setBackgroundResource(R.drawable.like);
+                                         }
+                                         likeClicked = false;
+                                     }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+
+
+                        }
+                    });
 
             }
 
@@ -123,17 +183,20 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+
     public void sendMsg (){
         if (!msg_input.getText().toString().equals("")){
             Map<String, Object> map = new HashMap<String, Object>();
             temp_key = ref.push().getKey();
             ref.updateChildren(map);
+            Log.d("msg_id", temp_key);
 
             DatabaseReference message_root = ref.child(temp_key);
             Map<String, Object> map2 = new HashMap<String, Object>();
             map2.put("name", current_user);
             map2.put("msg", msg_input.getText().toString());
             map2.put("user_color", color);
+            map2.put("msg_id", temp_key);
             message_root.updateChildren(map2);
             msg_input.setText("");
             recyclerView.scrollToPosition(adapter.getItemCount()); //scroll to the last message
