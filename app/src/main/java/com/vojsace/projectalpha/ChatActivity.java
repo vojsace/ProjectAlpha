@@ -40,10 +40,10 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class ChatActivity extends AppCompatActivity {
-    private ImageButton btnSave, likeBtn;
+    private ImageButton btnSave;
     private EditText msg_input;
     private RecyclerView recyclerView;
-    private TextView scrollText, likeText;
+    private TextView questionText;
 
     DatabaseReference ref;
     private String room_name, current_user, color;
@@ -64,8 +64,8 @@ public class ChatActivity extends AppCompatActivity {
         current_user = getIntent().getExtras().get("user_name").toString();
         room_name = getIntent().getExtras().get("room_name").toString();
         color = getIntent().getExtras().get("user_color").toString();
-        scrollText = (TextView) findViewById(R.id.scrollText);
-        scrollText.setText(room_name); //adds the question
+        questionText = (TextView) findViewById(R.id.scrollText);
+        questionText.setText(room_name); //adds the question
 
         btnSave = (ImageButton)findViewById(R.id.imageButton);
         msg_input = (EditText)findViewById(R.id.chat_editText);
@@ -147,11 +147,9 @@ public class ChatActivity extends AppCompatActivity {
                                          if (dataSnapshot.child(room_name).child(msg_id).hasChild(current_user)){
                                              Log.d("unlike_msg", "success");
                                              mDatabaseLike.child(room_name).child(msg_id).child(current_user).removeValue();
-                                            // myViewHolder.likeBtn.setBackgroundResource(R.drawable.dislike);
                                          }else{
                                              mDatabaseLike.child(room_name).child(msg_id).child(current_user).setValue("true");
                                              Log.d("unlike_msg", "success - liked");
-                                            // myViewHolder.likeBtn.setBackgroundResource(R.drawable.like);
                                          }
                                          likeClicked = false;
                                      }

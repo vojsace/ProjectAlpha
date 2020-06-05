@@ -48,7 +48,6 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/listView"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="11dp"
         android:layout_marginBottom="16dp"
         android:background="@color/colorPrimary"
         android:gravity="center"
