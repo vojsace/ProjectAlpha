@@ -1,4 +1,4 @@
-package com.vojsace.projectalpha;
+package Model;
 
 public class model {
     private String msg;

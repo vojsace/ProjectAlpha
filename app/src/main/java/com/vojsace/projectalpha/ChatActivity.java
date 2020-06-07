@@ -1,12 +1,10 @@
 package com.vojsace.projectalpha;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,28 +14,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.ui.common.ChangeEventType;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
+
+import Model.model;
 
 public class ChatActivity extends AppCompatActivity {
     private ImageButton btnSave;
@@ -46,7 +38,7 @@ public class ChatActivity extends AppCompatActivity {
     private TextView questionText;
 
     DatabaseReference ref;
-    private String room_name, current_user, color;
+    private String room_name, current_user, color, question_color;
     private String temp_key;
     private boolean likeClicked = false;
     private int likes_count = 0;
@@ -61,10 +53,12 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        current_user = getIntent().getExtras().get("user_name").toString();
-        room_name = getIntent().getExtras().get("room_name").toString();
-        color = getIntent().getExtras().get("user_color").toString();
+        current_user = getIntent().getExtras().getString("user_name");
+        room_name = getIntent().getExtras().getString("room_name");
+        color = getIntent().getExtras().getString("user_color");
+        question_color = getIntent().getExtras().getString("question_color");
         questionText = (TextView) findViewById(R.id.scrollText);
+        questionText.setBackgroundColor(Integer.parseInt(question_color));
         questionText.setText(room_name); //adds the question
 
         btnSave = (ImageButton)findViewById(R.id.imageButton);
@@ -159,7 +153,10 @@ public class ChatActivity extends AppCompatActivity {
                                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                                     }
+
+
                                 });
+
 
 
                         }
