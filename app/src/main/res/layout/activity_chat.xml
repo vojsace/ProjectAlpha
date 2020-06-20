@@ -7,32 +7,14 @@
     android:background="@color/bgColor"
     tools:context=".ChatActivity">
 
-    <EditText
-        android:id="@+id/chat_editText"
-        android:layout_width="289dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="3dp"
-        android:background="@drawable/user_msg_rounded"
-        android:backgroundTint="#686666"
-        android:ems="10"
-        android:hint="@string/aa"
-        android:imeOptions="actionSend"
-        android:inputType="textLongMessage"
-        android:padding="8dp"
-        android:singleLine="false"
-        android:textColor="#FFFFFF" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewID"
         android:layout_width="match_parent"
-        android:layout_height="599dp"
-        android:layout_above="@+id/chat_editText"
+        android:layout_height="481dp"
+        android:layout_above="@+id/chat_layout"
         android:layout_below="@id/scrollText"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:clickable="false"
         android:isScrollContainer="false"
         android:orientation="vertical"
@@ -41,21 +23,6 @@
         android:scrollbars="vertical"
         app:reverseLayout="false"
         app:stackFromEnd="false" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/chat_editText"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="6dp"
-        android:layout_toEndOf="@+id/chat_editText"
-        android:background="@drawable/rounded_btn"
-        app:srcCompat="@drawable/arrow" />
 
     <TextView
         android:id="@+id/scrollText"
@@ -69,5 +36,42 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/chat_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/chat_editText"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/user_msg_rounded"
+            android:backgroundTint="#686666"
+            android:ems="10"
+            android:hint="@string/aa"
+            android:imeOptions="actionSend"
+            android:inputType="textLongMessage|textMultiLine|textCapSentences"
+            android:maxLines="3"
+            android:padding="8dp"
+            android:singleLine="false"
+            android:textColor="#FFFFFF" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_btn"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            app:srcCompat="@drawable/arrow" />
+    </LinearLayout>
 
 </RelativeLayout>
